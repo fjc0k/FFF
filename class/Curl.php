@@ -31,6 +31,7 @@ class Curl{
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, $return_raw);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); // https请求 不验证证书和hosts
 
         if(!isset($a['follow_location']) || $a['follow_location'] !== false){
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
