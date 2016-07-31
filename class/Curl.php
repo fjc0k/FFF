@@ -6,6 +6,14 @@ class Curl{
         $referer = isset($a['referer']) ? $a['referer'] : $url;
         $headers = isset($a['headers']) ? (is_array($a['headers']) ? $a['headers'] : explode("\r\n", $a['headers'])) : [];
         $post = isset($a['post']) ? $a['post'] : false;
+
+        // 2016-7-31 支持文件上传
+        if(isset($a['files'])){
+            array_walk($a['files'], function(&$file) {
+                $file = new \CURLFile($file);
+            });
+            $post = $post ? array_merge($post, $a['files']) : $a['files'];
+        }
         
         $headers[] = 'Host: ' . parse_url($url, PHP_URL_HOST);
         $headers[] = 'User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:32.0) Gecko/20100101 Firefox/32.0';
